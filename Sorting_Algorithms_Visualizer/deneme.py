@@ -8,8 +8,12 @@ from sorting import Sortings
 Sortings=Sortings()
 
 root = Tk()
+<<<<<<< HEAD
+=======
+root.title('Sorting Algorithm')
+>>>>>>> 4dd5d722bafdeb76961297217c7c249a0d279ca4
 root.maxsize(900, 600)
-root.config(bg='black')
+root.config(bg='white')
 
 #variables
 selected_alg = StringVar()
@@ -17,8 +21,8 @@ data = []
 #function
 def drawData(data, colorArray):
     canvas.delete("all")
-    c_height = 380
-    c_width = 600
+    c_height = 300
+    c_width = 300
     x_width = c_width / (len(data) + 1)
     offset = 30
     spacing = 10
