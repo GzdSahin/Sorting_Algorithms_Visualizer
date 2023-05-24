@@ -8,10 +8,7 @@ from sorting import Sortings
 Sortings=Sortings()
 
 root = Tk()
-<<<<<<< HEAD
-=======
 root.title('Sorting Algorithm')
->>>>>>> 4dd5d722bafdeb76961297217c7c249a0d279ca4
 root.maxsize(900, 600)
 root.config(bg='white')
 
@@ -89,11 +86,7 @@ canvas.grid(row=0, column=1, padx=0, pady=0)
 #User Interface Area
 #Row[0]
 Label(UI_frame, text="Algorithm: ", bg='white',fg='white').grid(row=0, column=0, padx=5, pady=5, sticky=W)
-<<<<<<< HEAD
 algMenu = ttk.Combobox(UI_frame, textvariable=selected_alg, values=['Bubble Sort','Selection Sort' ,'Quick Sort', 'Merge Sort', 'Insertion Sort'])
-=======
-algMenu = ttk.Combobox(UI_frame, textvariable=selected_alg, values=['Bubble Sort','Selection Sort' ,'Quick Sort', 'Merge Sort'])
->>>>>>> 4dd5d722bafdeb76961297217c7c249a0d279ca4
 algMenu.grid(row=0, column=0, padx=5, pady=5)
 algMenu.current(0)
 
