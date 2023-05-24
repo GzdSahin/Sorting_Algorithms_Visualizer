@@ -20,6 +20,22 @@ class Sortings:
             winsound.Beep(2500, 300)
             time.sleep(0.05)
         drawData(data, ['green' for x in range(len(data))])
+    
+    # INSERTION SORT
+    def insertion_sort(self, data, drawData, timeTick):
+        for i in range(1, len(data)):
+            key = data[i]
+            j = i - 1
+            while j >= 0 and data[j] > key:
+                data[j + 1] = data [j]
+                j -= 1
+            data[j + 1] = key
+            drawData(data, ['green' if x == j-1 or x == j + 1 else 'white' for x in range(len(data))])
+            time.sleep(timeTick)
+        for a in range(2):
+            winsound.Beep(2500, 300)
+            time.sleep(0.05)
+            drawData(data, ['green' for x in range(len(data))])
 
     # SELECTION SORT
     def selection_sort(self,data, drawData, timeTick):
@@ -146,7 +162,6 @@ class Sortings:
         drawData(data, ["green" if x >= left and x <=
                         right else "white" for x in range(len(data))])
         time.sleep(timeTick)
-
 
     def getColorArrayMerge(self,leght, left, middle, right):
         colorArray = []
