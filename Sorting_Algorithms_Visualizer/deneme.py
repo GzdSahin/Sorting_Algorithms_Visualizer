@@ -69,6 +69,8 @@ def StartAlgorithm():
 
     elif algMenu.get() == 'Merge Sort':
         Sortings.merge_sort(data, drawData, speedScale.get())
+    elif algMenu.get() == 'Insertion Sort':
+        Sortings.insertion_sort(data, drawData, speedScale.get())
     
     drawData(data, ['green' for x in range(len(data))])
 
@@ -85,7 +87,7 @@ canvas.grid(row=0, column=1, padx=0, pady=0)
 
 Label(UI_frame, text="Algorithm: ", bg='white',fg='white').grid(row=0, column=0, padx=5, pady=5, sticky=W) 
 
-algMenu = ttk.Combobox(UI_frame, textvariable=selected_alg, values=['Bubble Sort','Selection Sort' ,'Quick Sort', 'Merge Sort']) 
+algMenu = ttk.Combobox(UI_frame, textvariable=selected_alg, values=['Bubble Sort','Selection Sort' ,'Quick Sort', 'Merge Sort', 'Insertion Sort']) 
 
 algMenu.grid(row=0, column=0, padx=5, pady=5) 
 
