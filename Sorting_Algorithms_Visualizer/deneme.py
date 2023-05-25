@@ -225,6 +225,162 @@ def selection_sort_with_stem():
 
     plt.show()
 
+def quicksort_stem():
+    # Quick Sort algoritması
+    global data
+    def quicksort(arr, low, high):
+        if low < high:
+            pivot_index = partition(arr, low, high)
+            quicksort(arr, low, pivot_index - 1)
+            quicksort(arr, pivot_index + 1, high)
+
+    def partition(arr, low, high):
+        pivot = arr[high]
+        i = low - 1
+        for j in range(low, high):
+            if arr[j] <= pivot:
+                i += 1
+                arr[i], arr[j] = arr[j], arr[i]
+        arr[i + 1], arr[high] = arr[high], arr[i + 1]
+        return i + 1
+
+    fig, ax = plt.subplots()
+    plt.ion()  # Interaktif modu etkinleştir
+
+    ax.stem(data)
+    ax.set_title('Sıralanmamış Veri')
+    ax.set_xlabel('Indeks')
+    ax.set_ylabel('Değer')
+    plt.show()
+
+    sorted_data = data.copy()  # Sıralanmış veriyi güncellemek için kopyalayalım
+
+    low = 0
+    high = len(sorted_data) - 1
+    quicksort(sorted_data, low, high)  # Veriyi Quick Sort ile sırala
+
+    for i in range(low, high + 1):
+        ax.stem(sorted_data, linefmt='gray', markerfmt=' ')
+        ax.set_title(f'Karşılaştırma: {sorted_data[i]} ve {sorted_data[high]}')
+
+        if sorted_data[i] > sorted_data[high]:
+            sorted_data[i], sorted_data[high] = sorted_data[high], sorted_data[i]
+
+        ax.stem(i, sorted_data[i], linefmt='r', markerfmt='ro')
+        ax.stem(high, sorted_data[high], linefmt='r', markerfmt='ro')
+        plt.pause(0.5)
+
+    ax.clear()  # Grafik alanını temizle
+
+    # Sıralanmış veriyi yeşil renkte göster
+    ax.stem(sorted_data, linefmt='g', markerfmt='g')
+    ax.set_title('Sıralanmış Veri')
+    ax.set_xlabel('Indeks')
+    ax.set_ylabel('Değer')
+    plt.pause(1.5)  # Son durumu biraz daha uzun süre göstermek için bekle
+    plt.ioff()  # Interaktif modu kapat
+    plt.show()
+
+def merge_sort_stem():
+    # Merge Sort algoritması
+    global data
+    def merge_sort(arr):
+        if len(arr) <= 1:
+            return arr
+
+        mid = len(arr) // 2
+        left_half = arr[:mid]
+        right_half = arr[mid:]
+
+        left_half = merge_sort(left_half)
+        right_half = merge_sort(right_half)
+
+        return merge(left_half, right_half)
+
+    def merge(left, right):
+        merged = []
+        left_index = right_index = 0
+
+        while left_index < len(left) and right_index < len(right):
+            if left[left_index] <= right[right_index]:
+                merged.append(left[left_index])
+                left_index += 1
+            else:
+                merged.append(right[right_index])
+                right_index += 1
+
+        merged.extend(left[left_index:])
+        merged.extend(right[right_index:])
+
+        return merged
+
+    fig, ax = plt.subplots()
+    plt.ion()  # Interaktif modu etkinleştir
+
+    ax.stem(data)
+    ax.set_title('Sıralanmamış Veri')
+    ax.set_xlabel('Indeks')
+    ax.set_ylabel('Değer')
+    plt.show()
+
+    sorted_data = merge_sort(data)  # Veriyi Merge Sort ile sırala
+
+    for i in range(len(sorted_data)):
+        ax.stem(sorted_data, linefmt='gray', markerfmt=' ')
+        ax.set_title(f'Karşılaştırma: {sorted_data[i]}')
+        ax.stem(i, sorted_data[i], linefmt='r', markerfmt='ro')
+        plt.pause(0.5)
+
+    ax.clear()  # Grafik alanını temizle
+
+    # Sıralanmış veriyi yeşil renkte göster
+    ax.stem(sorted_data, linefmt='g', markerfmt='g')
+    ax.set_title('Sıralanmış Veri')
+    ax.set_xlabel('Indeks')
+    ax.set_ylabel('Değer')
+    plt.pause(1.5)  # Son durumu biraz daha uzun süre göstermek için bekle
+    plt.ioff()  # Interaktif modu kapat
+    plt.show()
+def insertion_sort_stem():
+    global data
+    # Insertion Sort algoritması
+    def insertion_sort(arr):
+        for i in range(1, len(arr)):
+            key = arr[i]
+            j = i - 1
+            while j >= 0 and arr[j] > key:
+                arr[j + 1] = arr[j]
+                j -= 1
+            arr[j + 1] = key
+        return arr
+
+    fig, ax = plt.subplots()
+    plt.ion()  # Interaktif modu etkinleştir
+
+    ax.stem(data)
+    ax.set_title('Sıralanmamış Veri')
+    ax.set_xlabel('Indeks')
+    ax.set_ylabel('Değer')
+    plt.show()
+
+    sorted_data = insertion_sort(data)  # Veriyi Insertion Sort ile sırala
+
+    for i in range(len(sorted_data)):
+        ax.stem(sorted_data, linefmt='gray', markerfmt=' ')
+        ax.set_title(f'Ekleme: {sorted_data[i]}')
+        ax.stem(i, sorted_data[i], linefmt='r', markerfmt='ro')
+        plt.pause(0.5)
+
+    ax.clear()  # Grafik alanını temizle
+
+    # Sıralanmış veriyi yeşil renkte göster
+    ax.stem(sorted_data, linefmt='g', markerfmt='g')
+    ax.set_title('Sıralanmış Veri')
+    ax.set_xlabel('Indeks')
+    ax.set_ylabel('Değer')
+    plt.pause(1.5)  # Son durumu biraz daha uzun süre göstermek için bekle
+    plt.ioff()  # Interaktif modu kapat
+    plt.show()
 
     
 def bubble_sort_with_scatter():
@@ -288,7 +444,206 @@ def selection_sort_with_scatter():
     ax.scatter(range(n), data, color='green')
     plt.show()
 
+def quicksort_scatter():
+    global data
+    # Quick Sort algoritması
+    def quicksort(arr, low, high):
+        if low < high:
+            pivot_index = partition(arr, low, high)
+            quicksort(arr, low, pivot_index - 1)
+            quicksort(arr, pivot_index + 1, high)
 
+    def partition(arr, low, high):
+        pivot = arr[high]
+        i = low - 1
+        for j in range(low, high):
+            if arr[j] <= pivot:
+                i += 1
+                arr[i], arr[j] = arr[j], arr[i]
+        arr[i + 1], arr[high] = arr[high], arr[i + 1]
+        return i + 1
+
+    fig, ax = plt.subplots()
+    plt.ion()  # Interaktif modu etkinleştir
+
+    x = list(range(len(data)))
+    y = data
+
+    ax.scatter(x, y, c='b')
+    ax.set_title('Sıralanmamış Veri')
+    ax.set_xlabel('Indeks')
+    ax.set_ylabel('Değer')
+    plt.show()
+
+    sorted_data = data.copy()  # Sıralanmış veriyi güncellemek için kopyalayalım
+
+    low = 0
+    high = len(sorted_data) - 1
+    quicksort(sorted_data, low, high)  # Veriyi Quick Sort ile sırala
+
+    for i in range(low, high + 1):
+        ax.clear()  # Grafik alanını temizle
+
+        ax.scatter(x, sorted_data, c='b')
+        ax.set_title(f'Karşılaştırma: {sorted_data[i]} ve {sorted_data[high]}')
+        ax.scatter(i, sorted_data[i], c='r')
+        ax.scatter(high, sorted_data[high], c='r')
+        plt.pause(0.5)
+
+        if sorted_data[i] > sorted_data[high]:
+            sorted_data[i], sorted_data[high] = sorted_data[high], sorted_data[i]
+
+    ax.clear()  # Grafik alanını temizle
+
+    # Sıralanmış veriyi yeşil renkte göster
+    ax.scatter(x, sorted_data, c='g')
+    ax.set_title('Sıralanmış Veri')
+    ax.set_xlabel('Indeks')
+    ax.set_ylabel('Değer')
+    plt.pause(1.5)  # Son durumu biraz daha uzun süre göstermek için bekle
+    plt.ioff()  # Interaktif modu kapat
+    plt.show()
+def merge_sort_scatter():
+    global data
+    # Merge Sort algoritması
+    def merge_sort(arr):
+        if len(arr) <= 1:
+            return arr
+
+        mid = len(arr) // 2
+        left_half = arr[:mid]
+        right_half = arr[mid:]
+
+        left_half = merge_sort(left_half)
+        right_half = merge_sort(right_half)
+
+        return merge(left_half, right_half)
+
+    def merge(left, right):
+        merged = []
+        left_index = right_index = 0
+
+        while left_index < len(left) and right_index < len(right):
+            if left[left_index] <= right[right_index]:
+                merged.append(left[left_index])
+                left_index += 1
+            else:
+                merged.append(right[right_index])
+                right_index += 1
+
+        merged.extend(left[left_index:])
+        merged.extend(right[right_index:])
+
+        return merged
+
+    fig, ax = plt.subplots()
+    plt.ion()  # Interaktif modu etkinleştir
+
+    x = list(range(len(data)))
+    y = data
+
+    ax.scatter(x, y, c='b')
+    ax.set_title('Sıralanmamış Veri')
+    ax.set_xlabel('Indeks')
+    ax.set_ylabel('Değer')
+    plt.show()
+
+    sorted_data = merge_sort(data.copy())  # Sıralanmış veriyi güncellemek için kopyalayalım
+
+    colors = ['r', 'g', 'c', 'm', 'y']  # Renklerin listesi
+
+    def merge_sort_visualize_helper(arr, start, end, depth):
+        if start >= end:
+            return
+
+        mid = (start + end) // 2
+        merge_sort_visualize_helper(arr, start, mid, depth + 1)
+        merge_sort_visualize_helper(arr, mid + 1, end, depth + 1)
+
+        merged = merge(arr[start:mid + 1], arr[mid + 1:end + 1])
+
+        ax.clear()  # Grafik alanını temizle
+        ax.scatter(x, arr, c='b')
+
+        color_index = depth % len(colors)  # Renklerin döngüsünü sağlamak için indeksi hesapla
+
+        # Karşılaştırma adımlarını göster
+        for i in range(start, end + 1):
+            if i <= mid:
+                ax.scatter(i, arr[i], c=colors[color_index])
+            else:
+                ax.scatter(i, arr[i], c=colors[color_index + 1])
+
+        ax.set_title(f'Karşılaştırma: {arr[start:mid + 1]} ve {arr[mid + 1:end + 1]}')
+        plt.pause(0.5)
+
+        arr[start:end + 1] = merged
+
+    merge_sort_visualize_helper(sorted_data, 0, len(sorted_data) - 1, 0)
+
+    ax.clear()  # Grafik alanını temizle
+
+    # Sıralanmış veriyi yeşil renkte göster
+    ax.scatter(x, sorted_data, c='g')
+    ax.set_title('Sıralanmış Veri')
+    ax.set_xlabel('Indeks')
+    ax.set_ylabel('Değer')
+    plt.pause(1.5)  # Son durumu biraz daha uz
+def insertion_sort_scatter():
+    global data
+    # Insertion Sort algoritması
+    def insertion_sort(arr):
+        for i in range(1, len(arr)):
+            key = arr[i]
+            j = i - 1
+            while j >= 0 and arr[j] > key:
+                arr[j + 1] = arr[j]
+                j -= 1
+            arr[j + 1] = key
+
+    fig, ax = plt.subplots()
+    plt.ion()  # Interaktif modu etkinleştir
+
+    x = list(range(len(data)))
+    y = data
+
+    ax.scatter(x, y, c='b')
+    ax.set_title('Sıralanmamış Veri')
+    ax.set_xlabel('Indeks')
+    ax.set_ylabel('Değer')
+    plt.show()
+
+    sorted_data = data.copy()  # Sıralanmış veriyi güncellemek için kopyalayalım
+
+    for i in range(1, len(sorted_data)):
+        key = sorted_data[i]
+        j = i - 1
+
+        ax.clear()  # Grafik alanını temizle
+        ax.scatter(x, sorted_data, c='b')
+
+        while j >= 0 and sorted_data[j] > key:
+            sorted_data[j + 1] = sorted_data[j]
+
+            # Karşılaştırma adımlarını göster
+            ax.scatter(j, sorted_data[j], c='r')
+            ax.scatter(j + 1, sorted_data[j + 1], c='g')
+            plt.pause(0.5)
+
+            j -= 1
+
+        sorted_data[j + 1] = key
+
+    ax.clear()  # Grafik alanını temizle
+
+    # Sıralanmış veriyi yeşil renkte göster
+    ax.scatter(x, sorted_data, c='g')
+    ax.set_title('Sıralanmış Veri')
+    ax.set_xlabel('Indeks')
+    ax.set_ylabel('Değer')
+    plt.pause(1.5)  # Son durumu biraz daha uzun süre göstermek için bekle
+    plt.ioff()  # Interaktif modu kapat
+    plt.show()
 
 def StartAlgorithm2():
 
@@ -301,6 +656,13 @@ def StartAlgorithm2():
          bubble_sort_with_stem()
     elif algMenu.get() == 'Selection Sort':
         selection_sort_with_stem()
+    elif algMenu.get() == 'Quick Sort':
+        quicksort_stem()
+    elif algMenu.get() == 'Merge Sort':
+        merge_sort_stem()
+    elif algMenu.get() == 'Insertion Sort': 
+        insertion_sort_stem()   
+
     
         
 def StartAlgorithm3():
@@ -314,6 +676,15 @@ def StartAlgorithm3():
          bubble_sort_with_scatter()
     elif algMenu.get() == 'Selection Sort':
         selection_sort_with_scatter()
+    elif algMenu.get() == 'Quick Sort':
+        quicksort_scatter()
+    elif algMenu.get() == 'Merge Sort':
+        merge_sort_scatter()
+    elif algMenu.get() == 'Insertion Sort':
+        insertion_sort_scatter()
+
+
+
 Button(UI_frame, text="KÖK GRAFİĞİ", command=StartAlgorithm2, bg='MediumPurple1').grid(row=9, column=0, padx=5, pady=5) 
 
 Button(UI_frame, text="DAĞILIM GRAFİĞİ", comman=StartAlgorithm3, bg='MediumPurple1').grid(row=11, column=0, padx=8, pady=5) 
