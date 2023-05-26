@@ -6,12 +6,14 @@ import tkinter as tk
 
 
 
-
 class Sortings:
+    
     # BUBBLE SORT
     def bubble_sort(self,data, drawData, timeTick):
+        comparison_count = 0
         for _ in range(len(data)-1):
             for j in range(len(data)-1):
+                comparison_count += 1
                 if data[j] > data[j+1]:
                     data[j], data[j+1] = data[j+1], data[j]
                     drawData(data, ['green' if x == j or x == j+1 else 'white' for x in range(len(data))] )
@@ -20,33 +22,43 @@ class Sortings:
             winsound.Beep(2500, 300)
             time.sleep(0.05)
         drawData(data, ['green' for x in range(len(data))])
+
+        return comparison_count
     
     # INSERTION SORT
     def insertion_sort(self, data, drawData, timeTick):
+        comparison_count = 0
         for i in range(1, len(data)):
             key = data[i]
             j = i - 1
             while j >= 0 and data[j] > key:
+                comparison_count += 1
                 data[j + 1] = data [j]
                 j -= 1
             data[j + 1] = key
+            
             drawData(data, ['green' if x == j-1 or x == j + 1 else 'white' for x in range(len(data))])
             time.sleep(timeTick)
         for a in range(2):
             winsound.Beep(2500, 300)
             time.sleep(0.05)
             drawData(data, ['green' for x in range(len(data))])
+        
+        return comparison_count        
+
 
     # SELECTION SORT
     def selection_sort(self,data, drawData, timeTick):
+        comparison_count = 0
         for i in range(len(data)-1):
-
             min_idx = i
             for j in range(i+1, len(data)):
+                comparison_count += 1
                 if data[min_idx] > data[j]: 
                     min_idx = j
                     
             data[i], data[min_idx] = data[min_idx], data[i]
+            
             drawData(data, ['green' if x == min_idx or x == i else 'red' for x in range(len(data))] )
             time.sleep(timeTick)
         for i in range(2):
@@ -54,10 +66,13 @@ class Sortings:
             time.sleep(0.05)
         drawData(data, ['green' for x in range(len(data))])
 
+        return comparison_count
+
     
 
     # QUICK SORT
     def partition(self,data, left, right, drawData, timeTick):
+        comparison_count = 0
         border = left
         pivot = data[right]
 
@@ -65,6 +80,7 @@ class Sortings:
         time.sleep(timeTick)
 
         for j in range(left, right):
+            comparison_count +=1
             if data[j] < pivot:
                 drawData(data, self.getColorArray(
                     len(data), left, right, border, j, True))
@@ -72,7 +88,7 @@ class Sortings:
 
                 data[border], data[j] = data[j], data[border]
                 border += 1
-
+                
             drawData(data, self.getColorArray(len(data), left, right, border, j))
             time.sleep(timeTick)
 
@@ -82,18 +98,26 @@ class Sortings:
 
         data[border], data[right] = data[right], data[border]
 
-        return border
+        return border, comparison_count
 
 
     def quick_sort(self,data, left, right, drawData, timeTick):
+        
         if left < right:
-            partitionIdx = self.partition(data, left, right, drawData, timeTick)
+            partitionIdx, comparison_count = self.partition(data, left, right, drawData, timeTick)
 
             #LEFT PARTITION
-            self.quick_sort(data, left, partitionIdx-1, drawData, timeTick)
+            comparison_count_left = self.quick_sort(data, left, partitionIdx-1, drawData, timeTick)
 
             #RIGHT PARTITION
-            self.quick_sort(data, partitionIdx+1, right, drawData, timeTick)
+            comparison_count_right =  self.quick_sort(data, partitionIdx+1, right, drawData, timeTick)
+
+            total_comparison_count = comparison_count + comparison_count_left + comparison_count_right
+
+            return total_comparison_count
+        else: 
+            return 0
+            
 
 
     def getColorArray(self,dataLen, left, right, border, currIdx, isSwaping=False):
@@ -120,30 +144,40 @@ class Sortings:
 
     # MERGE SORT
     def merge_sort(self,data, drawData, timeTick):
-        self.merge_sort_alg(data, 0, len(data)-1, drawData, timeTick)
+        
+        comparison_count = self.merge_sort_alg(data, 0, len(data)-1, drawData, timeTick)
+        
         for i in range(2):
             winsound.Beep(2500, 300)
         time.sleep(0.05)
 
+        return comparison_count
+
 
     def merge_sort_alg(self,data, left, right, drawData, timeTick):
+        comparison_count = 0
         if left < right:
             middle = (left + right) // 2
-            self.merge_sort_alg(data, left, middle, drawData, timeTick)
-            self.merge_sort_alg(data, middle+1, right, drawData, timeTick)
-            self.merge(data, left, middle, right, drawData, timeTick)
+            comparison_count += self.merge_sort_alg(data, left, middle, drawData, timeTick)
+            comparison_count += self.merge_sort_alg(data, middle+1, right, drawData, timeTick)
+            comparison_count += self.merge(data, left, middle, right, drawData, timeTick)
+        
+        return comparison_count
+
 
 
     def merge(self,data, left, middle, right, drawData, timeTick):
         drawData(data, self.getColorArrayMerge(len(data), left, middle, right))
         time.sleep(timeTick)
 
+        comporison_count = 0
         leftPart = data[left:middle+1]
         rightPart = data[middle+1: right+1]
 
         leftIdx = rightIdx = 0
 
         for dataIdx in range(left, right+1):
+            comporison_count += 1
             if leftIdx < len(leftPart) and rightIdx < len(rightPart):
                 if leftPart[leftIdx] <= rightPart[rightIdx]:
                     data[dataIdx] = leftPart[leftIdx]
@@ -162,6 +196,8 @@ class Sortings:
         drawData(data, ["green" if x >= left and x <=
                         right else "white" for x in range(len(data))])
         time.sleep(timeTick)
+
+        return comporison_count
 
     def getColorArrayMerge(self,leght, left, middle, right):
         colorArray = []

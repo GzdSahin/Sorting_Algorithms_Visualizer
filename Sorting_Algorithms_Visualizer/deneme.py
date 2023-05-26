@@ -18,6 +18,7 @@ root.config(bg='white')
 selected_alg = StringVar()
 data = []
 
+
 #function
 def drawData(data, colorArray):
     canvas.delete("all")
@@ -59,18 +60,38 @@ def StartAlgorithm():
     if not data: return
 
     if algMenu.get() == 'Quick Sort':
-        Sortings.quick_sort(data, 0, len(data)-1, drawData, speedScale.get())
+        timeTick = 0.1
+        comparison_label = Label(root, text="Karşılaştırma Sayısı: 0")
+        comparison_label.grid(row=1, column=0)
+        comparison_count = Sortings.quick_sort(data, 0, len(data)-1, drawData , timeTick)
+        comparison_label.config(text= "Karşılatırma Sayısı: {}".format(comparison_count))
     
     elif algMenu.get() == 'Bubble Sort':
-        Sortings.bubble_sort(data, drawData, speedScale.get())
-
+        timeTick = 0.1
+        comparison_label = Label(root, text="Karşılaştırma Sayısı: 0")
+        comparison_label.grid(row=1, column=0)
+        comparison_count = Sortings.bubble_sort(data, drawData , timeTick)
+        comparison_label.config(text= "Karşılatırma Sayısı: {}".format(comparison_count))
+        
     elif algMenu.get() == 'Selection Sort':
-        Sortings.selection_sort(data, drawData, speedScale.get())
+        timeTick = 0.1
+        comparison_label = Label(root, text="Karşılaştırma Sayısı: 0")
+        comparison_label.grid(row=1, column=0)
+        comparison_count = Sortings.selection_sort(data, drawData , timeTick)
+        comparison_label.config(text= "Karşılatırma Sayısı: {}".format(comparison_count))
 
     elif algMenu.get() == 'Merge Sort':
-        Sortings.merge_sort(data, drawData, speedScale.get())
+        timeTick = 0.1
+        comparison_label = Label(root, text="Karşılaştırma Sayısı: 0")
+        comparison_label.grid(row=1, column=0)
+        comparison_count = Sortings.merge_sort(data, drawData , timeTick)
+        comparison_label.config(text= "Karşılatırma Sayısı: {}".format(comparison_count))
     elif algMenu.get() == 'Insertion Sort':
-        Sortings.insertion_sort(data, drawData, speedScale.get())
+        timeTick = 0.1
+        comparison_label = Label(root, text="Karşılaştırma Sayısı: 0")
+        comparison_label.grid(row=1, column=0)
+        comparison_count = Sortings.insertion_sort(data, drawData , timeTick)
+        comparison_label.config(text= "Karşılatırma Sayısı: {}".format(comparison_count))
     
     drawData(data, ['green' for x in range(len(data))])
 
@@ -687,6 +708,7 @@ def StartAlgorithm3():
 
 Button(UI_frame, text="KÖK GRAFİĞİ", command=StartAlgorithm2, bg='MediumPurple1').grid(row=9, column=0, padx=5, pady=5) 
 
+Button(UI_frame, text="KÖK GRAFİĞİ", command=StartAlgorithm2, bg='MediumPurple1').grid(row=9, column=0, padx=5, pady=5) 
 Button(UI_frame, text="DAĞILIM GRAFİĞİ", comman=StartAlgorithm3, bg='MediumPurple1').grid(row=11, column=0, padx=8, pady=5) 
 
 
@@ -694,8 +716,6 @@ Button(UI_frame, text="DAĞILIM GRAFİĞİ", comman=StartAlgorithm3, bg='MediumP
 
 
 
-
- 
 
 root.mainloop() 
 
